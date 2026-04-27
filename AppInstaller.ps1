@@ -18,16 +18,16 @@ Add-Type -AssemblyName System.Drawing
 # S  = selected (runtime state)
 
 $Script:Apps = @(
-    @{ Name="AltSnap";                  T="winget"; Id="RamonUnch.AltSnap";                  D="Move/resize windows with Alt+drag";           S=$false }
+    @{ Name="AltSnap";                  T="winget"; Id="AltSnap.AltSnap";                  D="Move/resize windows with Alt+drag";           S=$false }
     @{ Name="Monitorian";               T="store";  Id="9NW33J738BL0";                       D="Monitor brightness controller";               S=$false }
     @{ Name="PowerToys";                T="winget"; Id="Microsoft.PowerToys";                D="Microsoft productivity utilities suite";       S=$false }
-    @{ Name="Battery Mode";             T="winget"; Id="tarcode.BatteryMode";                D="Laptop battery plan switcher";                S=$false }
+    @{ Name="Battery Mode";             T="url";    Id="https://github.com/tarcode-apps/BatteryMode/releases/latest"; D="Laptop battery plan switcher (opens browser)";  S=$false }
     @{ Name="Nilesoft Shell";           T="winget"; Id="Nilesoft.Shell";                     D="Custom right-click context menu";             S=$false }
-    @{ Name="EarTrumpet";               T="winget"; Id="File.EarTrumpet";                    D="Per-app volume control";                      S=$false }
-    @{ Name="Notepads App";             T="winget"; Id="Jackhawks.Notepads";                 D="Modern multi-tab notepad replacement";         S=$false }
+    @{ Name="EarTrumpet";               T="winget"; Id="File-New-Project.EarTrumpet";                    D="Per-app volume control";                      S=$false }
+    @{ Name="Notepads App";             T="winget"; Id="JackieLiu.NotepadsApp";                 D="Modern multi-tab notepad replacement";         S=$false }
     @{ Name="ShareX";                   T="winget"; Id="ShareX.ShareX";                      D="Screenshot, recording & file sharing";         S=$false }
     @{ Name="IconViewer";               T="url";    Id="https://www.botproductions.com/iconview/iconview.html"; D="Browse icons in EXEs/DLLs (opens browser)"; S=$false }
-    @{ Name="ProtonVPN";                T="winget"; Id="ProtonTechnologies.ProtonVPN";        D="Secure & private VPN client";                 S=$false }
+    @{ Name="ProtonVPN";                T="winget"; Id="Proton.ProtonVPN";        D="Secure & private VPN client";                 S=$false }
     @{ Name="Playnite";                 T="winget"; Id="Playnite.Playnite";                   D="Unified game library manager";                S=$false }
     @{ Name="Flow Launcher";            T="winget"; Id="Flow-Launcher.Flow-Launcher";         D="Keyboard launcher & quick search";            S=$false }
     @{ Name="Everything";               T="winget"; Id="voidtools.Everything";                D="Instant file & folder search";                S=$false }
@@ -37,7 +37,7 @@ $Script:Apps = @(
     @{ Name="BeWidgets";                T="store";  Id="9NQ07FG50H2Q";                       D="Customizable desktop widgets";                S=$false }
     @{ Name="Scrcpy";                   T="winget"; Id="Genymobile.scrcpy";                   D="Android screen mirror & remote control";       S=$false }
     @{ Name="Bulk Crap Uninstaller";    T="winget"; Id="Klocman.BulkCrapUninstaller";         D="Mass-uninstall programs & leftovers";          S=$false }
-    @{ Name="FreeFileSync";             T="winget"; Id="FreeFileSync.FreeFileSync";            D="File backup & folder synchronization";         S=$false }
+    @{ Name="FreeFileSync";             T="url";    Id="https://freefilesync.org/download.php";         D="File backup & folder sync (opens browser)";    S=$false }
     @{ Name="Wintoys";                  T="store";  Id="9P8LTPGCBZXD";                       D="Windows tweaks & cleanup tool";               S=$false }
     @{ Name="Chocolatey";               T="choco";  Id="";                                   D="Windows CLI package manager";                 S=$false }
     @{ Name="FxSound";                  T="winget"; Id="FxSound.FxSound";                    D="Real-time audio enhancement";                 S=$false }
@@ -50,7 +50,7 @@ $Script:Apps = @(
     @{ Name="Fan Control";              T="winget"; Id="Rem0o.FanControl";                    D="Advanced CPU/GPU fan curve control";           S=$false }
     @{ Name="Mica For Everyone";        T="winget"; Id="MicaForEveryone.MicaForEveryone";     D="Mica transparency for any window";             S=$false }
     @{ Name="MSI Afterburner";          T="winget"; Id="Guru3D.Afterburner";                  D="GPU overclocking & monitoring";               S=$false }
-    @{ Name="SuperF4";                  T="winget"; Id="stefansundin.SuperF4";                D="Force-kill any frozen application";           S=$false }
+    @{ Name="SuperF4";                  T="winget"; Id="StefanSundin.Superf4";                D="Force-kill any frozen application";           S=$false }
     @{ Name="Keyviz";                   T="winget"; Id="mulaRahul.Keyviz";                   D="Real-time keystroke visualizer on screen";     S=$false }
 )
 
@@ -347,7 +347,7 @@ $Script:Timer.Add_Tick({
                 Log ""
                 Log "  ✔  All installations finished! Check the log above for results." $C.Green
             }
-            "^__PROG:(\d+)__$" {
+            "^__PROG:(\d+)$" {
                 $v = [int]$Matches[1]
                 if ($v -le $pbar.Maximum) { $pbar.Value = $v }
             }
@@ -483,7 +483,7 @@ $btnInst.Add_Click({
                 $q.Enqueue("__ERR:  ✘  $($app.Name) threw an exception: $_")
             }
 
-            $q.Enqueue("__PROG:$i__")
+            $q.Enqueue("__PROG:$i")
             $q.Enqueue("")   # blank line between apps
         }
 
